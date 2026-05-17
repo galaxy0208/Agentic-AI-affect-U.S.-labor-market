@@ -4,177 +4,241 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Immigration, AI Exposure & Labor Vulnerability — Research Extension</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #0b0b0d;
-  --surface: #141416;
-  --surface2: #1c1c1f;
-  --border: rgba(255,255,255,0.06);
-  --border-em: rgba(255,255,255,0.13);
-  --text: #eceae5;
-  --muted: #7a7875;
-  --muted2: #555350;
-  --teal: #1D9E75;
-  --teal-light: #5DCAA5;
-  --blue: #378ADD;
-  --blue-light: #85B7EB;
-  --coral: #D85A30;
-  --coral-light: #F0997B;
-  --amber: #BA7517;
-  --amber-light: #EF9F27;
-  --red: #E24B4A;
-  --green-light: #97C459;
-  --purple: #7F77DD;
-  --purple-light: #AFA9EC;
+  --font: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --bg: #ffffff;
+  --text: #000000;
+  --muted: #595959;
+  --muted2: #9ca3af;
+  --border: #000000;
+  --border-light: #e5e7eb;
+  --green: #bbf7d0;
+  --green-dark: #16a34a;
+  --surface: #f9fafb;
+  --shadow: 4px 4px 0px #000000;
+  --shadow-sm: 2px 2px 0px #000000;
+  /* data colors — adjusted for white bg */
+  --teal:   #059669;
+  --blue:   #2563eb;
+  --coral:  #dc2626;
+  --amber:  #d97706;
+  --purple: #7c3aed;
 }
 
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 300;
-  font-size: 15px;
+  font-family: var(--font);
+  font-size: 14px;
   line-height: 1.7;
   min-height: 100vh;
 }
 
+/* ─── NAV ─── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  border-bottom: 1px solid var(--border-light);
+  padding: 0 32px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  background: var(--green);
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  text-decoration: none;
+  color: var(--text);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 12.5px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.nav-links a:hover { color: var(--text); }
+
+.nav-cta {
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--text);
+  color: #fff;
+  border: 1px solid var(--border);
+  padding: 6px 16px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  font-family: var(--font);
+  text-decoration: none;
+}
+
+.nav-cta:hover { background: #fff; color: var(--text); }
+
+/* ─── HERO ─── */
 .hero {
-  padding: 80px 24px 72px;
-  max-width: 900px;
+  max-width: 960px;
   margin: 0 auto;
-  border-bottom: 1px solid var(--border);
+  padding: 72px 32px 64px;
+  border-bottom: 1px solid var(--border-light);
 }
 
 .eyebrow {
-  font-size: 10.5px;
-  font-weight: 500;
-  letter-spacing: 0.13em;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--teal-light);
-  margin-bottom: 18px;
+  color: var(--muted);
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.eyebrow::after {
-  content: '';
-  display: block;
-  flex: 1;
-  max-width: 80px;
-  height: 1px;
-  background: var(--teal);
-  opacity: 0.4;
+.eyebrow-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--green-dark);
+  border-radius: 50%;
 }
 
 h1 {
-  font-family: 'DM Serif Display', serif;
-  font-size: clamp(30px, 4.5vw, 54px);
-  font-weight: 400;
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 700;
   line-height: 1.1;
-  color: var(--text);
-  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
 }
 
 h1 em {
-  font-style: italic;
-  color: var(--teal-light);
+  font-style: normal;
+  background: var(--green);
+  padding: 0 6px;
 }
 
 .hero-desc {
-  font-size: 15px;
+  font-size: 14px;
   color: var(--muted);
-  max-width: 640px;
-  margin-bottom: 32px;
-  line-height: 1.75;
+  max-width: 600px;
+  margin-bottom: 36px;
+  line-height: 1.8;
 }
 
 .feedback-card {
-  background: var(--surface2);
-  border: 1px solid var(--border-em);
-  border-left: 3px solid var(--amber);
-  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
   padding: 20px 24px;
-  max-width: 720px;
+  max-width: 680px;
 }
 
 .feedback-card .label {
   font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--amber-light);
-  margin-bottom: 8px;
+  color: var(--muted);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.feedback-card .label::before {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 12px;
+  background: var(--amber);
 }
 
 .feedback-card p {
-  font-size: 14px;
-  color: #b5b0a8;
+  font-size: 13.5px;
+  color: var(--muted);
   font-style: italic;
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
+/* ─── MAIN ─── */
 .main {
-  max-width: 900px;
+  max-width: 960px;
   margin: 0 auto;
-  padding: 0 24px 120px;
+  padding: 0 32px 120px;
 }
 
 .section-divider {
-  padding: 64px 0 0;
+  padding: 72px 0 0;
 }
 
 .section-label {
+  display: inline-block;
   font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.13em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--muted2);
-  margin-bottom: 8px;
-}
-
-h2 {
-  font-family: 'DM Serif Display', serif;
-  font-size: clamp(20px, 2.5vw, 28px);
-  font-weight: 400;
-  line-height: 1.2;
   color: var(--text);
+  background: var(--green);
+  padding: 2px 8px;
   margin-bottom: 14px;
 }
 
+h2 {
+  font-size: clamp(20px, 2.5vw, 30px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
 .narrative {
-  font-size: 14.5px;
-  color: #9a9690;
+  font-size: 14px;
+  color: var(--muted);
   max-width: 680px;
-  line-height: 1.8;
+  line-height: 1.85;
   margin-bottom: 36px;
 }
 
 .narrative strong {
-  color: #d4cfc8;
-  font-weight: 500;
+  color: var(--text);
+  font-weight: 600;
 }
 
+/* ─── CHART CARDS ─── */
 .chart-card {
-  background: var(--surface);
+  background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
+  box-shadow: var(--shadow);
   margin-bottom: 40px;
 }
 
 .chart-header {
-  padding: 24px 28px 20px;
-  border-bottom: 1px solid var(--border);
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border-light);
 }
 
 .chart-num {
   font-size: 10px;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted2);
@@ -182,100 +246,106 @@ h2 {
 }
 
 .chart-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 17px;
-  font-weight: 400;
+  font-size: 15px;
+  font-weight: 700;
   color: var(--text);
   margin-bottom: 5px;
+  line-height: 1.3;
 }
 
 .chart-subtitle {
-  font-size: 12.5px;
+  font-size: 12px;
   color: var(--muted);
   max-width: 600px;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
-.chart-body {
-  padding: 24px 28px 24px;
-}
+.chart-body { padding: 24px; }
 
 .legend {
   display: flex;
   flex-wrap: wrap;
   gap: 18px;
-  margin-bottom: 20px;
-  font-size: 12px;
+  margin-bottom: 18px;
+  font-size: 11.5px;
   color: var(--muted);
 }
 
 .legend-item { display: flex; align-items: center; gap: 7px; }
-.lg { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+.lg { width: 10px; height: 10px; border-radius: 1px; flex-shrink: 0; }
 
 .source {
   font-size: 11px;
   color: var(--muted2);
   margin-top: 14px;
-  opacity: 0.8;
+  line-height: 1.6;
 }
 
+/* ─── STAT GRID ─── */
 .stat-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   gap: 12px;
   margin-bottom: 40px;
 }
 
 .stat-card {
-  background: var(--surface);
+  background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 18px 20px;
+  box-shadow: var(--shadow-sm);
+  padding: 20px 22px;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+
+.stat-card:hover {
+  box-shadow: 6px 6px 0px #000;
+  transform: translate(-1px, -1px);
 }
 
 .stat-value {
-  font-family: 'DM Serif Display', serif;
-  font-size: 28px;
-  font-weight: 400;
+  font-size: 32px;
+  font-weight: 700;
   line-height: 1;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
 }
 
 .stat-label {
-  font-size: 12px;
+  font-size: 11.5px;
   color: var(--muted);
   line-height: 1.5;
 }
 
+/* ─── KEY INSIGHT ─── */
 .key-insight {
-  background: var(--surface2);
+  background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  box-shadow: var(--shadow-sm);
   padding: 20px 24px;
   margin-bottom: 40px;
   display: grid;
-  grid-template-columns: 4px 1fr;
-  gap: 16px;
+  grid-template-columns: 3px 1fr;
+  gap: 18px;
   align-items: start;
 }
 
 .insight-bar {
-  width: 4px;
-  height: 100%;
+  width: 3px;
   min-height: 40px;
-  border-radius: 2px;
-  background: var(--teal);
+  height: 100%;
+  background: var(--text);
   margin-top: 2px;
 }
 
 .insight-text {
   font-size: 13.5px;
-  color: #aba69e;
-  line-height: 1.75;
+  color: var(--muted);
+  line-height: 1.8;
 }
 
-.insight-text strong { color: #ddd8d0; font-weight: 500; }
+.insight-text strong { color: var(--text); font-weight: 600; }
 
+/* ─── TWO-COL ─── */
 .two-col {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -283,56 +353,124 @@ h2 {
   margin-bottom: 40px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .two-col { grid-template-columns: 1fr; }
   .stat-grid { grid-template-columns: 1fr 1fr; }
+  nav { padding: 0 16px; }
+  .hero, .main { padding-left: 16px; padding-right: 16px; }
+  .nav-links { display: none; }
 }
 
+/* ─── TABLE ─── */
 .comparison-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: 12.5px;
 }
 
 .comparison-table th {
   text-align: left;
-  font-size: 10.5px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--muted2);
+  color: var(--muted);
   padding: 10px 14px;
-  border-bottom: 1px solid var(--border-em);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
 }
 
 .comparison-table td {
   padding: 12px 14px;
-  border-bottom: 1px solid var(--border);
-  color: #c5c0b8;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--muted);
   vertical-align: top;
+  line-height: 1.6;
 }
 
+.comparison-table tr:hover td { background: #f9fafb; }
 .comparison-table tr:last-child td { border-bottom: none; }
+.comparison-table td:first-child { font-weight: 600; color: var(--text); }
 
-.comparison-table td:first-child { font-weight: 500; color: var(--text); }
-
+/* ─── BADGES ─── */
 .badge {
   display: inline-block;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 11px;
-  font-weight: 500;
+  padding: 1px 7px;
+  border: 1px solid var(--border);
+  font-size: 10.5px;
+  font-weight: 600;
 }
 
-.badge-high { background: rgba(216,90,48,0.15); color: #F0997B; }
-.badge-low  { background: rgba(29,158,117,0.12); color: #5DCAA5; }
-.badge-mid  { background: rgba(186,117,23,0.15); color: #EF9F27; }
+.badge-high { border-color: var(--coral); color: var(--coral); }
+.badge-low  { border-color: var(--teal);  color: var(--teal);  }
+.badge-mid  { border-color: var(--amber); color: var(--amber); }
+
+/* ─── FINDINGS ─── */
+.finding-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  padding: 22px;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+
+.finding-card:hover {
+  box-shadow: 6px 6px 0 #000;
+  transform: translate(-1px, -1px);
+}
+
+.finding-num {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.finding-num-badge {
+  background: var(--green);
+  padding: 1px 8px;
+}
+
+.finding-text {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+/* ─── FOOTER ─── */
+footer {
+  border-top: 1px solid var(--border-light);
+  padding: 32px;
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--muted2);
+  max-width: 960px;
+  margin: 0 auto;
+}
 </style>
 </head>
 <body>
 
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">CDS 301</a>
+  <ul class="nav-links">
+    <li><a href="#context">Context</a></li>
+    <li><a href="#paradox">H-1B Paradox</a></li>
+    <li><a href="#korea">Korea</a></li>
+    <li><a href="#comparison">Comparison</a></li>
+    <li><a href="#findings">Findings</a></li>
+  </ul>
+  <a class="nav-cta" href="https://github.com/galaxy0208/Agentic-AI-affect-U.S.-labor-market" target="_blank">GitHub →</a>
+</nav>
+
+<!-- HERO -->
 <section class="hero">
-  <p class="eyebrow">Research Extension · Agentic AI & Labor</p>
+  <p class="eyebrow"><span class="eyebrow-dot"></span>Research Extension · Agentic AI & Labor</p>
   <h1>Immigration Policy<br>as a <em>Labor Buffer</em><br>in the Age of AI</h1>
   <p class="hero-desc">Extending our analysis of agentic AI's impact on U.S. labor markets, this section examines how immigration policy — specifically the H-1B visa system and cross-national openness to foreign workers — interacts with AI-driven occupational displacement. We compare the United States, a high-immigration economy, with South Korea, a historically restrictive one.</p>
 
@@ -345,26 +483,26 @@ h2 {
 <main class="main">
 
   <!-- SECTION 1 -->
-  <div class="section-divider">
+  <div class="section-divider" id="context">
     <p class="section-label">Context</p>
-    <h2>The U.S. as a High-Immigration, High-AI-Exposure Economy</h2>
-    <p class="narrative">In 2024, <strong>31.4 million foreign-born workers</strong> made up 19.2% of the entire U.S. civilian labor force — a historic high. This workforce is disproportionately concentrated in AI-exposed sectors: professional & business services (15.4%), information technology, and healthcare. Meanwhile, the H-1B visa program channels skilled immigrants directly into the highest-exposure occupations — computer-related roles accounted for <strong>66% of all H-1B approvals</strong> in recent fiscal years.</p>
+    <h2>The U.S. as a High-Immigration,<br>High-AI-Exposure Economy</h2>
+    <p class="narrative">In 2024, <strong>31.4 million foreign-born workers</strong> made up 19.2% of the entire U.S. civilian labor force — a historic high. This workforce is disproportionately concentrated in AI-exposed sectors: professional &amp; business services (15.4%), information technology, and healthcare. Meanwhile, the H-1B visa program channels skilled immigrants directly into the highest-exposure occupations — computer-related roles accounted for <strong>66% of all H-1B approvals</strong> in recent fiscal years.</p>
 
     <div class="stat-grid">
       <div class="stat-card">
-        <div class="stat-value" style="color: var(--teal-light);">19.2%</div>
+        <div class="stat-value" style="color: var(--teal);">19.2%</div>
         <div class="stat-label">Foreign-born share of U.S. labor force, 2024 (BLS, May 2025)</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value" style="color: var(--blue-light);">66%</div>
+        <div class="stat-value" style="color: var(--blue);">66%</div>
         <div class="stat-label">H-1B approvals in computer-related occupations (USCIS FY2022)</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value" style="color: var(--amber-light);">$118K</div>
+        <div class="stat-value" style="color: var(--amber);">$118K</div>
         <div class="stat-label">Median annual salary of approved H-1B holders (FY2022)</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value" style="color: var(--coral-light);">65%</div>
+        <div class="stat-value" style="color: var(--coral);">65%</div>
         <div class="stat-label">Top U.S. AI companies with at least one immigrant founder (NFAP)</div>
       </div>
     </div>
@@ -382,47 +520,47 @@ h2 {
       </div>
       <div class="chart-body">
         <div class="legend">
-          <span class="legend-item"><span class="lg" style="background:#5DCAA5;"></span>Immigrant share of industry workforce (%)</span>
-          <span class="legend-item"><span class="lg" style="background:#F0997B;"></span>Estimated AI exposure index (0–100)</span>
+          <span class="legend-item"><span class="lg" style="background:#059669;"></span>Immigrant share of industry workforce (%)</span>
+          <span class="legend-item"><span class="lg" style="background:#dc2626;"></span>Estimated AI exposure index (0–100)</span>
         </div>
-        <div style="position: relative; width: 100%; height: 340px;">
+        <div style="position:relative; width:100%; height:320px;">
           <canvas id="chartA" role="img" aria-label="Grouped bar chart comparing immigrant workforce concentration and AI exposure by U.S. industry sector."></canvas>
         </div>
-        <p class="source">Sources: BLS Foreign-Born Labor Force Report 2024 (May 2025); Massenkoff & McCrory, Anthropic (2026); O*NET 28.0</p>
+        <p class="source">Sources: BLS Foreign-Born Labor Force Report 2024 (May 2025); Massenkoff &amp; McCrory, Anthropic (2026); O*NET 28.0</p>
       </div>
     </div>
   </div>
 
   <!-- SECTION 2 -->
-  <div class="section-divider">
+  <div class="section-divider" id="paradox">
     <p class="section-label">The H-1B Paradox</p>
-    <h2>Cheap Labor, High Exposure — The H-1B Squeeze</h2>
+    <h2>Cheap Labor, High Exposure —<br>The H-1B Squeeze</h2>
     <p class="narrative">Critics argue that H-1B visas allow firms to undercut domestic wages in AI-exposed roles. Proponents counter that immigrant talent builds the AI ecosystem itself. The data reveals both are partially true — creating a paradox where <strong>immigration simultaneously accelerates and is threatened by AI displacement</strong>.</p>
 
     <div class="two-col">
-      <div class="chart-card" style="margin-bottom: 0;">
+      <div class="chart-card" style="margin-bottom:0;">
         <div class="chart-header">
           <p class="chart-num">Chart B</p>
           <h3 class="chart-title">Entry-level job postings decline in AI-exposed sectors</h3>
           <p class="chart-subtitle">Post-ChatGPT trend in new hire rates for young workers (22–25) in high-exposure occupations.</p>
         </div>
         <div class="chart-body">
-          <div style="position: relative; width: 100%; height: 220px;">
+          <div style="position:relative; width:100%; height:200px;">
             <canvas id="chartB" role="img" aria-label="Line chart showing decline in job start rates for young workers in AI-exposed occupations after ChatGPT release."></canvas>
           </div>
-          <p class="source">Source: Massenkoff & McCrory (2026) via CPS; Brynjolfsson et al. (2025)</p>
+          <p class="source">Source: Massenkoff &amp; McCrory (2026) via CPS; Brynjolfsson et al. (2025)</p>
         </div>
       </div>
 
-      <div class="chart-card" style="margin-bottom: 0;">
+      <div class="chart-card" style="margin-bottom:0;">
         <div class="chart-header">
           <p class="chart-num">Chart C</p>
           <h3 class="chart-title">H-1B approvals vs. tech layoffs, major firms</h3>
           <p class="chart-subtitle">Firms simultaneously receiving H-1B approvals and announcing workforce reductions — a key tension in the current policy debate.</p>
         </div>
         <div class="chart-body">
-          <div style="position: relative; width: 100%; height: 220px;">
-            <canvas id="chartC" role="img" aria-label="Horizontal bar chart comparing H-1B approvals and concurrent layoffs at major tech companies."></canvas>
+          <div style="position:relative; width:100%; height:200px;">
+            <canvas id="chartC" role="img" aria-label="Bar chart comparing H-1B approvals and concurrent layoffs at major tech companies."></canvas>
           </div>
           <p class="source">Source: USCIS FY2025 FOIA data; Newsweek (Aug 2025); White House proclamation (Sep 2025)</p>
         </div>
@@ -430,32 +568,32 @@ h2 {
     </div>
 
     <div class="key-insight">
-      <div class="insight-bar" style="background: var(--coral);"></div>
+      <div class="insight-bar" style="background:var(--coral);"></div>
       <p class="insight-text">In FY2025, one software company received over 5,000 H-1B approvals while simultaneously announcing 15,000+ layoffs. A third firm reduced its workforce by ~27,000 since 2022 while being approved for 25,000+ H-1B workers over the same period (White House, Sep 2025). <strong>AI adoption is being used to justify domestic workforce reduction while immigration channels keep high-exposure roles filled at lower cost</strong> — compressing wages and narrowing entry points for both native-born and immigrant workers.</p>
     </div>
   </div>
 
   <!-- SECTION 3 -->
-  <div class="section-divider">
+  <div class="section-divider" id="korea">
     <p class="section-label">Comparative Case</p>
-    <h2>South Korea: Anti-Immigration meets AI Vulnerability</h2>
-    <p class="narrative">South Korea presents a structural contrast to the U.S. model. With only <strong>~3% of its workforce foreign-born</strong> (vs. 18.6% in the U.S.), Korea has historically maintained tight immigration controls. Yet the country faces compounding pressures: a rapidly aging population, one of the fastest demographic declines globally, and a labor structure that the IMF identifies as highly polarized between AI-complementary professional roles and AI-exposed clerical ones.</p>
+    <h2>South Korea: Anti-Immigration<br>meets AI Vulnerability</h2>
+    <p class="narrative">South Korea presents a structural contrast to the U.S. model. With only <strong>~3% of its workforce foreign-born</strong> (vs. 19.2% in the U.S.), Korea has historically maintained tight immigration controls. Yet the country faces compounding pressures: a rapidly aging population, one of the fastest demographic declines globally, and a labor structure that the IMF identifies as highly polarized between AI-complementary professional roles and AI-exposed clerical ones.</p>
 
     <div class="stat-grid">
       <div class="stat-card">
-        <div class="stat-value" style="color: var(--coral-light);">~3%</div>
+        <div class="stat-value" style="color:var(--coral);">~3%</div>
         <div class="stat-label">Foreign-born share of South Korea's workforce (OECD 2024, vs. 13% in Germany, 18% in Canada)</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value" style="color: var(--amber-light);">38.8%</div>
+        <div class="stat-value" style="color:var(--amber);">38.8%</div>
         <div class="stat-label">Korean jobs at risk of 70%+ task automation as of 2023 (KDI Research Monograph 2023)</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value" style="color: var(--purple-light);">2024</div>
+        <div class="stat-value" style="color:var(--purple);">2024</div>
         <div class="stat-label">Year Korea entered "super-aged" status (20%+ population aged 65+)</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value" style="color: var(--red);">37th</div>
+        <div class="stat-value" style="color:var(--coral);">37th</div>
         <div class="stat-label">Korea's IMD World Talent Ranking in 2025, down from 26th in 2024</div>
       </div>
     </div>
@@ -478,8 +616,8 @@ h2 {
           <tbody>
             <tr>
               <td>Foreign-born workforce share</td>
-              <td><span style="color: var(--teal-light);">18.6%</span> (2024, BLS)</td>
-              <td><span style="color: var(--coral-light);">~3%</span> (2024, OECD)</td>
+              <td><strong style="color:var(--teal);">19.2%</strong> (2024, BLS)</td>
+              <td><strong style="color:var(--coral);">~3%</strong> (2024, OECD)</td>
             </tr>
             <tr>
               <td>High-skill immigration channel</td>
@@ -488,7 +626,7 @@ h2 {
             </tr>
             <tr>
               <td>AI exposure — dominant risk sector</td>
-              <td><span class="badge badge-high">High</span> Professional & business services, tech</td>
+              <td><span class="badge badge-high">High</span> Professional &amp; business services, tech</td>
               <td><span class="badge badge-high">High</span> Clerical roles; polarized vs. professional</td>
             </tr>
             <tr>
@@ -519,9 +657,9 @@ h2 {
   </div>
 
   <!-- SECTION 4 -->
-  <div class="section-divider">
+  <div class="section-divider" id="comparison">
     <p class="section-label">Cross-National Comparison</p>
-    <h2>Immigration Openness as an AI-Vulnerability Modifier</h2>
+    <h2>Immigration Openness as an<br>AI-Vulnerability Modifier</h2>
     <p class="narrative">The core hypothesis from our professor's feedback: <strong>countries that accept more immigrants may experience AI-driven displacement differently than countries that resist immigration</strong>. In immigrant-heavy economies, AI exposure risk is distributed across a larger, more mobile workforce. In restrictive economies like Korea, the same AI disruption lands on a demographically shrinking, aging domestic base — with no immigrant buffer to absorb transition costs.</p>
 
     <div class="chart-card">
@@ -531,129 +669,137 @@ h2 {
         <p class="chart-subtitle">Countries with higher immigrant workforce shares tend to have greater flexibility in absorbing labor market disruption. Low-immigration economies face a double constraint: demographic decline and AI displacement hitting the same shrinking domestic workforce. AI exposure values are estimates based on occupational composition analysis; exact per-country indices are not available from a single authoritative source.</p>
       </div>
       <div class="chart-body">
-        <div style="position: relative; width: 100%; height: 360px;">
-          <canvas id="chartE" role="img" aria-label="Scatter chart of foreign-born workforce share vs. aggregate AI exposure index for selected countries including US, Canada, Germany, Japan, France, UK, Italy, and South Korea."></canvas>
+        <div style="position:relative; width:100%; height:360px;">
+          <canvas id="chartE" role="img" aria-label="Bubble chart of foreign-born workforce share vs. aggregate AI exposure index for selected countries."></canvas>
         </div>
         <p class="source">Sources: OECD International Migration Outlook 2024; Pizzinelli et al., IMF WP 2023/216; Eloundou et al. (2023). <em>Note: Country-level AI exposure index values (0–100) are illustrative estimates derived from occupational composition and AI task-exposure analysis; no single published dataset provides exact per-country indices on this scale.</em></p>
       </div>
     </div>
 
     <div class="key-insight">
-      <div class="insight-bar" style="background: var(--purple);"></div>
+      <div class="insight-bar" style="background:var(--purple);"></div>
       <p class="insight-text"><strong>The structural argument:</strong> In the U.S., when AI displaces a domestic software developer, the labor market adjusts partly through immigrant workers filling adjacent roles, transitioning into new AI-adjacent positions, or returning home — a form of involuntary labor market flexibility. In Korea, <strong>there is no such buffer</strong>. AI displacement of clerical workers hits a labor pool that is already shrinking due to aging, declining birth rates, and growing talent emigration — creating a structural convergence of AI disruption and demographic crisis that no single policy can address in isolation.</p>
     </div>
   </div>
 
-  <!-- SECTION 5: Research Implications -->
-  <div class="section-divider">
+  <!-- SECTION 5 -->
+  <div class="section-divider" id="findings">
     <p class="section-label">Research Implications</p>
     <h2>What This Means for Our Framework</h2>
     <p class="narrative">Incorporating immigration policy as a variable transforms our analysis from a simple G7 occupational exposure comparison into a structural vulnerability framework. The key insight: <strong>AI exposure index alone is insufficient to predict real labor market harm</strong>. The same exposure score produces different outcomes depending on a country's demographic flexibility — and immigration is the primary mechanism of that flexibility in advanced economies.</p>
 
-    <div class="stat-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
-      <div class="stat-card" style="border-left: 3px solid var(--teal);">
-        <div class="stat-value" style="font-size: 18px; color: var(--teal-light); margin-bottom: 10px;">Finding 1</div>
-        <div class="stat-label" style="font-size: 13px; color: #aba69e;">High-immigration economies (U.S., Canada) distribute AI exposure risk across a more mobile, international workforce — partially buffering domestic employment shocks.</div>
+    <div class="stat-grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));">
+      <div class="finding-card">
+        <div class="finding-num"><span class="finding-num-badge">Finding 01</span></div>
+        <p class="finding-text">High-immigration economies (U.S., Canada) distribute AI exposure risk across a more mobile, international workforce — partially buffering domestic employment shocks.</p>
       </div>
-      <div class="stat-card" style="border-left: 3px solid var(--coral);">
-        <div class="stat-value" style="font-size: 18px; color: var(--coral-light); margin-bottom: 10px;">Finding 2</div>
-        <div class="stat-label" style="font-size: 13px; color: #aba69e;">The H-1B system creates a paradox: immigrant labor fills AI-exposed roles at potentially lower cost, compressing wages — yet immigrant founders and engineers also build the AI systems driving displacement.</div>
+      <div class="finding-card">
+        <div class="finding-num"><span class="finding-num-badge">Finding 02</span></div>
+        <p class="finding-text">The H-1B system creates a paradox: immigrant labor fills AI-exposed roles at potentially lower cost, compressing wages — yet immigrant founders and engineers also build the AI systems driving displacement.</p>
       </div>
-      <div class="stat-card" style="border-left: 3px solid var(--purple);">
-        <div class="stat-value" style="font-size: 18px; color: var(--purple-light); margin-bottom: 10px;">Finding 3</div>
-        <div class="stat-label" style="font-size: 13px; color: #aba69e;">South Korea faces compounding structural risk: high AI exposure in clerical roles, zero immigration buffer, and accelerating demographic decline — a uniquely vulnerable profile with no near-term policy resolution.</div>
+      <div class="finding-card">
+        <div class="finding-num"><span class="finding-num-badge">Finding 03</span></div>
+        <p class="finding-text">South Korea faces compounding structural risk: high AI exposure in clerical roles, zero immigration buffer, and accelerating demographic decline — a uniquely vulnerable profile with no near-term policy resolution.</p>
       </div>
     </div>
 
-    <p class="source" style="font-size: 12px; margin-top: 8px;">Data sources: BLS (2024–2025) · OECD International Migration Outlook 2024 & 2025 · Anthropic Economic Index / Massenkoff & McCrory (2026) · KDI Research Monograph (2023) · IMF Korea Selected Issues (2025) · WEF Future of Jobs Report (2025) · USCIS FOIA data FY2022–2025 · White House Proclamation Sep 2025 · Korea Times (Nov 2025) · Economic Innovation Group (2025)</p>
+    <p class="source" style="font-size:11.5px; margin-top:4px; border-top:1px solid var(--border-light); padding-top:16px;">
+      Data sources: BLS (2024–2025) · OECD International Migration Outlook 2024 &amp; 2025 · Anthropic Economic Index / Massenkoff &amp; McCrory (2026) · KDI Research Monograph (2023) · IMF Korea Selected Issues (2025) · WEF Future of Jobs Report (2025) · USCIS FOIA data FY2022–2025 · White House Proclamation Sep 2025 · Korea Times (Nov 2025) · Economic Innovation Group (2025)
+    </p>
   </div>
 
 </main>
 
+<footer>
+  <p>This website was created as coursework for <strong>CDS 301 / 501: Scientific Information and Data Visualization (Spring 2026) at George Mason Korea</strong>.</p>
+  <p style="margin-top:8px;">Licensed under <a href="http://creativecommons.org/licenses/by-sa/4.0/" style="color:var(--text);">CC BY-SA 4.0</a>. Template based on <a href="https://utkuozbulak.github.io/cds_301_template_website/" style="color:var(--text);">CDS 301 Template</a>.</p>
+</footer>
+
 <script>
-Chart.defaults.color = '#7a7875';
-Chart.defaults.font.family = "'DM Sans', sans-serif";
-Chart.defaults.font.size = 11.5;
+const FONT = "ui-monospace, 'Courier New', monospace";
+Chart.defaults.color = '#595959';
+Chart.defaults.font.family = FONT;
+Chart.defaults.font.size = 11;
 
 const tp = {
-  backgroundColor: '#1c1c1f',
-  borderColor: 'rgba(255,255,255,0.1)',
+  backgroundColor: '#111',
+  borderColor: '#333',
   borderWidth: 1,
-  titleColor: '#eceae5',
-  bodyColor: '#aaa69e',
+  titleColor: '#fff',
+  bodyColor: '#ccc',
   padding: 12,
-  cornerRadius: 8,
+  cornerRadius: 0,
   displayColors: true,
   boxWidth: 10,
   boxHeight: 10,
   boxPadding: 4,
 };
 
-// Chart A: Immigrant concentration vs AI exposure by industry
+// Chart A
 new Chart(document.getElementById('chartA'), {
   type: 'bar',
   data: {
-    labels: ['Professional & Business Svcs', 'Information Technology', 'Healthcare & Education', 'Construction', 'Leisure & Hospitality', 'Financial Activities', 'Manufacturing', 'Transportation'],
+    labels: ['Prof & Business', 'Info Technology', 'Healthcare & Edu', 'Construction', 'Leisure & Hosp', 'Financial', 'Manufacturing', 'Transportation'],
     datasets: [
       {
         label: 'Immigrant share of workforce (%)',
         data: [23, 28, 18, 30, 22, 16, 20, 19],
-        backgroundColor: 'rgba(93,202,165,0.65)',
-        borderColor: '#1D9E75',
-        borderWidth: 0.5,
-        borderRadius: 3,
-        borderSkipped: false,
+        backgroundColor: 'rgba(5,150,105,0.7)',
+        borderColor: '#059669',
+        borderWidth: 1,
+        borderRadius: 0,
       },
       {
         label: 'AI exposure index (0–100)',
         data: [80, 84, 45, 23, 31, 80, 42, 33],
-        backgroundColor: 'rgba(240,153,123,0.7)',
-        borderColor: '#D85A30',
-        borderWidth: 0.5,
-        borderRadius: 3,
-        borderSkipped: false,
+        backgroundColor: 'rgba(220,38,38,0.65)',
+        borderColor: '#dc2626',
+        borderWidth: 1,
+        borderRadius: 0,
       }
     ]
   },
   options: {
     responsive: true,
     maintainAspectRatio: false,
-    plugins: { legend: { display: false }, tooltip: { ...tp, callbacks: { label: c => ` ${c.dataset.label}: ${c.parsed.y}${c.datasetIndex === 1 ? '/100' : '%'}` } } },
+    plugins: {
+      legend: { display: false },
+      tooltip: { ...tp, callbacks: { label: c => ` ${c.dataset.label}: ${c.parsed.y}${c.datasetIndex === 1 ? '/100' : '%'}` } }
+    },
     scales: {
-      x: { ticks: { maxRotation: 30, color: '#7a7875' }, grid: { display: false } },
-      y: { max: 100, ticks: { callback: v => v, color: '#7a7875' }, grid: { color: 'rgba(255,255,255,0.04)' } }
+      x: { ticks: { maxRotation: 25, color: '#595959', font: { size: 10 } }, grid: { display: false } },
+      y: { max: 100, ticks: { color: '#595959' }, grid: { color: 'rgba(0,0,0,0.05)' }, border: { color: '#e5e7eb' } }
     }
   }
 });
 
-// Chart B: Job start rate young workers
-const years = ['2021','2022','2022 Q4\n(ChatGPT)','2023','2024','2025'];
+// Chart B
 new Chart(document.getElementById('chartB'), {
   type: 'line',
   data: {
-    labels: years,
+    labels: ['2021','2022','Q4\'22\n(ChatGPT)','2023','2024','2025'],
     datasets: [
       {
         label: 'High AI exposure',
         data: [1.85, 1.90, 1.88, 1.75, 1.55, 1.42],
-        borderColor: '#F0997B',
-        backgroundColor: 'rgba(240,153,123,0.1)',
+        borderColor: '#dc2626',
+        backgroundColor: 'rgba(220,38,38,0.07)',
         borderWidth: 2,
         pointRadius: 4,
-        pointBackgroundColor: '#F0997B',
-        tension: 0.35,
+        pointBackgroundColor: '#dc2626',
+        tension: 0.3,
         fill: true,
       },
       {
         label: 'Low AI exposure',
         data: [1.90, 2.0, 2.0, 1.98, 2.0, 2.01],
-        borderColor: '#5DCAA5',
-        backgroundColor: 'rgba(93,202,165,0.06)',
+        borderColor: '#059669',
+        backgroundColor: 'rgba(5,150,105,0.05)',
         borderWidth: 2,
         borderDash: [5, 4],
         pointRadius: 4,
-        pointBackgroundColor: '#5DCAA5',
-        tension: 0.35,
+        pointBackgroundColor: '#059669',
+        tension: 0.3,
         fill: true,
       }
     ]
@@ -662,17 +808,17 @@ new Chart(document.getElementById('chartB'), {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { display: true, position: 'top', labels: { color: '#7a7875', boxWidth: 10, font: { size: 11 } } },
+      legend: { display: true, position: 'top', labels: { color: '#595959', boxWidth: 10, font: { size: 10 } } },
       tooltip: { ...tp, callbacks: { label: c => ` ${c.dataset.label}: ${c.parsed.y.toFixed(2)}% monthly inflow` } }
     },
     scales: {
-      x: { ticks: { color: '#7a7875', font: { size: 10 } }, grid: { display: false } },
-      y: { min: 1.0, max: 2.5, ticks: { callback: v => v + '%', color: '#7a7875' }, grid: { color: 'rgba(255,255,255,0.04)' } }
+      x: { ticks: { color: '#595959', font: { size: 10 } }, grid: { display: false } },
+      y: { min: 1.0, max: 2.5, ticks: { callback: v => v + '%', color: '#595959' }, grid: { color: 'rgba(0,0,0,0.05)' }, border: { color: '#e5e7eb' } }
     }
   }
 });
 
-// Chart C: H-1B vs Layoffs
+// Chart C
 new Chart(document.getElementById('chartC'), {
   type: 'bar',
   data: {
@@ -681,18 +827,18 @@ new Chart(document.getElementById('chartC'), {
       {
         label: 'H-1B approvals (FY2024–25, 000s)',
         data: [15, 5, 5, 4.2, 3.1, 5.0, 1.7],
-        backgroundColor: 'rgba(55,138,221,0.6)',
-        borderColor: '#378ADD',
-        borderWidth: 0.5,
-        borderRadius: 3,
+        backgroundColor: 'rgba(37,99,235,0.65)',
+        borderColor: '#2563eb',
+        borderWidth: 1,
+        borderRadius: 0,
       },
       {
         label: 'Layoffs announced (000s)',
         data: [0, 10, 11, 12, 0, 15, 2.4],
-        backgroundColor: 'rgba(226,75,74,0.55)',
-        borderColor: '#E24B4A',
-        borderWidth: 0.5,
-        borderRadius: 3,
+        backgroundColor: 'rgba(220,38,38,0.6)',
+        borderColor: '#dc2626',
+        borderWidth: 1,
+        borderRadius: 0,
       }
     ]
   },
@@ -700,26 +846,26 @@ new Chart(document.getElementById('chartC'), {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { display: true, position: 'top', labels: { color: '#7a7875', boxWidth: 10, font: { size: 10 } } },
+      legend: { display: true, position: 'top', labels: { color: '#595959', boxWidth: 10, font: { size: 10 } } },
       tooltip: { ...tp, callbacks: { label: c => ` ${c.dataset.label}: ${c.parsed.y}K` } }
     },
     scales: {
-      x: { ticks: { color: '#7a7875', font: { size: 10 } }, grid: { display: false } },
-      y: { ticks: { callback: v => v + 'K', color: '#7a7875' }, grid: { color: 'rgba(255,255,255,0.04)' } }
+      x: { ticks: { color: '#595959', font: { size: 10 } }, grid: { display: false } },
+      y: { ticks: { callback: v => v + 'K', color: '#595959' }, grid: { color: 'rgba(0,0,0,0.05)' }, border: { color: '#e5e7eb' } }
     }
   }
 });
 
-// Chart E: Scatter - immigration openness vs AI exposure
+// Chart E
 const countries = [
-  { label: 'United States', x: 18.6, y: 72, color: '#5DCAA5' },
-  { label: 'Canada', x: 24.0, y: 68, color: '#5DCAA5' },
-  { label: 'Germany', x: 13.0, y: 63, color: '#85B7EB' },
-  { label: 'United Kingdom', x: 15.5, y: 70, color: '#85B7EB' },
-  { label: 'France', x: 11.5, y: 61, color: '#85B7EB' },
-  { label: 'Italy', x: 10.5, y: 55, color: '#AFA9EC' },
-  { label: 'Japan', x: 3.5, y: 58, color: '#EF9F27' },
-  { label: 'South Korea', x: 3.0, y: 65, color: '#E24B4A' },
+  { label: 'United States',  x: 19.2, y: 72, color: '#059669' },
+  { label: 'Canada',         x: 24.0, y: 68, color: '#059669' },
+  { label: 'Germany',        x: 13.0, y: 63, color: '#2563eb' },
+  { label: 'United Kingdom', x: 15.5, y: 70, color: '#2563eb' },
+  { label: 'France',         x: 11.5, y: 61, color: '#2563eb' },
+  { label: 'Italy',          x: 10.5, y: 55, color: '#7c3aed' },
+  { label: 'Japan',          x:  3.5, y: 58, color: '#d97706' },
+  { label: 'South Korea',    x:  3.0, y: 65, color: '#dc2626' },
 ];
 
 new Chart(document.getElementById('chartE'), {
@@ -727,36 +873,33 @@ new Chart(document.getElementById('chartE'), {
   data: {
     datasets: countries.map(c => ({
       label: c.label,
-      data: [{ x: c.x, y: c.y, r: 14 }],
-      backgroundColor: c.color + 'cc',
+      data: [{ x: c.x, y: c.y, r: 13 }],
+      backgroundColor: c.color + '33',
       borderColor: c.color,
-      borderWidth: 1,
+      borderWidth: 2,
     }))
   },
   options: {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { display: true, position: 'right', labels: { color: '#7a7875', boxWidth: 8, font: { size: 11 }, padding: 12 } },
-      tooltip: {
-        ...tp,
-        callbacks: {
-          label: c => ` ${c.dataset.label} — Immigration: ${c.parsed.x}%, AI Exposure: ${c.parsed.y}/100`
-        }
-      }
+      legend: { display: true, position: 'right', labels: { color: '#595959', boxWidth: 8, font: { size: 11 }, padding: 12 } },
+      tooltip: { ...tp, callbacks: { label: c => ` ${c.dataset.label} — Immigration: ${c.parsed.x}%, AI Exposure: ${c.parsed.y}/100` } }
     },
     scales: {
       x: {
         min: 0, max: 30,
-        title: { display: true, text: 'Foreign-born share of workforce (%)', color: '#555350' },
-        ticks: { callback: v => v + '%', color: '#7a7875' },
-        grid: { color: 'rgba(255,255,255,0.04)' }
+        title: { display: true, text: 'Foreign-born share of workforce (%)', color: '#595959', font: { family: FONT, size: 11 } },
+        ticks: { callback: v => v + '%', color: '#595959' },
+        grid: { color: 'rgba(0,0,0,0.05)' },
+        border: { color: '#e5e7eb' }
       },
       y: {
         min: 40, max: 85,
-        title: { display: true, text: 'Aggregate AI exposure index (0–100)', color: '#555350' },
-        ticks: { color: '#7a7875' },
-        grid: { color: 'rgba(255,255,255,0.04)' }
+        title: { display: true, text: 'Aggregate AI exposure index (0–100)', color: '#595959', font: { family: FONT, size: 11 } },
+        ticks: { color: '#595959' },
+        grid: { color: 'rgba(0,0,0,0.05)' },
+        border: { color: '#e5e7eb' }
       }
     }
   }
